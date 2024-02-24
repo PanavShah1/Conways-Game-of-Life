@@ -15,6 +15,7 @@ console.log(H)
 console.log(W)
 console.log("hi")
 
+
 let cells_array = []
 class Cell{
     constructor(i, j){
@@ -176,12 +177,15 @@ function changeCells(){
     fillColor();
 }
 
-// document.addEventListener("DOMContentLoaded", setCells)
-// document.addEventListener("click", setCells)
 
+let intervalId
 function start(){
     // setCells()
-    setInterval(changeCells, 1000)
+    intervalId = setInterval(changeCells, 200)
+}
+
+function stop(){
+    clearInterval(intervalId)
 }
 
 
