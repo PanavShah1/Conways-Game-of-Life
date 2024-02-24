@@ -2,9 +2,12 @@ const canvas = document.getElementById("canvas")
 
 const ctx = canvas.getContext("2d")
 
+canvas.width = canvas.clientWidth
+canvas.height = canvas.clientHeight
+
 const W = canvas.width
 const H = canvas.height
-const N = 40
+const N = 100
 const W_cell = W/N
 const H_cell = H/N
 
@@ -31,11 +34,11 @@ for(let i = 0; i < N; i++){
 
 console.log(cells_array)
 
-function randomCells(event){
+function randomCells(){
     for(let i = 0; i < N; i++){
         for(let j = 0; j < N; j++){
             var rand = Math.floor(Math.random()*10)
-            if(rand <= 3){
+            if(rand <= 1){
                 cells_array[i][j].fill = true
             }
             else{
