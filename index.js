@@ -15,6 +15,28 @@ console.log(H)
 console.log(W)
 console.log("hi")
 
+function drawGridLines(){
+    for(let i = 0; i < N; i++){
+        ctx.beginPath()
+        ctx.strokeStyle = "rgb(50, 50, 50)"
+        ctx.lineWidth = 1
+        ctx.moveTo(i*W_cell, 0)
+        ctx.lineTo(i*W_cell, H)
+        ctx.stroke()
+    }
+    for(let i = 0; i < N; i++){
+        ctx.beginPath()
+        ctx.strokeStyle = "rgb(50, 50, 50)"
+        ctx.lineWidth = 1
+        ctx.moveTo(0, i*H_cell)
+        ctx.lineTo(W, i*H_cell)
+        ctx.stroke()
+    }
+}
+drawGridLines()
+
+
+
 
 let cells_array = []
 class Cell{
@@ -24,18 +46,21 @@ class Cell{
         this.fill = false
     }
 }
-
-for(let i = 0; i < N; i++){
-    let temp_array = []
-    for(let j = 0; j < N; j++){
-        temp_array.push(new Cell(i, j))
+function initialization(){
+    cells_array = []
+    for(let i = 0; i < N; i++){
+        let temp_array = []
+        for(let j = 0; j < N; j++){
+            temp_array.push(new Cell(i, j))
+        }
+        cells_array.push(temp_array)
     }
-    cells_array.push(temp_array)
+    console.log(cells_array)
 }
+initialization()
 
-console.log(cells_array)
 
-function setCells(){
+function randomCells(){
     for(let i = 0; i < N; i++){
         for(let j = 0; j < N; j++){
             var rand = Math.floor(Math.random()*10)
@@ -51,33 +76,27 @@ function setCells(){
 }
 
 function inputGrid(event) {
-    // Calculate canvas-relative mouse coordinates
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
 
-    // Determine which cell was clicked
     for (let i = 0; i < N; i++) {
         for (let j = 0; j < N; j++) {
             const cell = cells_array[i][j];
-            // Calculate cell boundaries
             const cellX = cell.x;
             const cellY = cell.y;
             const cellRight = cellX + W_cell;
             const cellBottom = cellY + H_cell;
-            // Check if mouse coordinates are within cell boundaries
             if (mouseX >= cellX && mouseX < cellRight && mouseY >= cellY && mouseY < cellBottom) {
-                // Toggle the fill property of the clicked cell
-                cell.fill = !cell.fill;
-                // Redraw the canvas
+                cell.fill = !cell.fill
                 fillColor();
-                return; // Exit the loop early since we found the clicked cell
+                return
             }
         }
     }
 }
 
-canvas.addEventListener("click", inputGrid)
+canvas.addEventListener("mousedown", inputGrid)
 
 // function setCells(event){
 //     cells_array[15][15].fill = true
@@ -115,6 +134,8 @@ function fillColor(){
             }
         }
     }
+    drawGridLines()
+
 }
 
 function changeCells(){
@@ -186,6 +207,11 @@ function start(){
 
 function stop(){
     clearInterval(intervalId)
+}
+
+function reset(){
+    initialization()
+    fillColor()
 }
 
 
