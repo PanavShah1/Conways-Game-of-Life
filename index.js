@@ -34,7 +34,7 @@ for(let i = 0; i < N; i++){
 
 console.log(cells_array)
 
-function randomCells(){
+function setCells(){
     for(let i = 0; i < N; i++){
         for(let j = 0; j < N; j++){
             var rand = Math.floor(Math.random()*10)
@@ -49,7 +49,7 @@ function randomCells(){
     fillColor()
 }
 
-// function randomCells(event){
+// function setCells(event){
 //     cells_array[15][15].fill = true
 //     cells_array[16][14].fill = true
 //     cells_array[17][14].fill = true
@@ -145,16 +145,7 @@ function changeCells(){
     fillColor();
 }
 
-// function run(){
-//     console.log("running")
-//     randomCells()
-//     fillColor()
-//     console.log(cells_array)
-//     console.log("finished running")
-// }
-
-// run()
-document.addEventListener("DOMContentLoaded", randomCells)
+document.addEventListener("DOMContentLoaded", setCells)
 
 setInterval(changeCells, 200)
 
