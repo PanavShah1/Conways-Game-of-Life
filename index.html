@@ -10,16 +10,27 @@
     
     <div id="cont">
         <canvas id="canvas"></canvas>
-        <div id="input">
-            <button id="start" onclick="start()">Start</button>
-            <button id="stop" onclick="stop()">Stop</button>
-            <button id="random-cells" onclick="randomCells()">Random</button>
-            <button id="reset" onclick="reset()">Reset</button>
-            <p>Size : <span id="size-span">5</span></p>
-            <input type="range" id="size" min="1" max="10" value="5">
-            <p>Speed : <span id="speed-span">5</span></p>
-            <input type="range" id="speed" min="1" max="10" value="5">
+        <div id="inner-cont">
+            <div id="info">
+                This is a simulation of Conway's Game of Life. <br><br>
+                Rules: 
+                <ul>
+                    <li>If the cell is alive, then it stays alive if it has either 2 or 3 live neighbors </li>
+                    <li>If the cell is dead, then it springs to life only in the case that it has 3 live neighbors</li>
+                </ul>
+            </div>
+            <div id="input">
+                <button id="start" onclick="start()">Start</button>
+                <button id="stop" onclick="stop()">Stop</button>
+                <button id="random-cells" onclick="randomCells()">Random</button>
+                <button id="reset" onclick="reset()">Reset</button>
+                <p>Size : <span id="size-span">5</span></p>
+                <input type="range" id="size" min="1" max="10" value="5">
+                <p>Speed : <span id="speed-span">5</span></p>
+                <input type="range" id="speed" min="1" max="10" value="5">
+            </div>
         </div>
+        
 
 
     </div>
