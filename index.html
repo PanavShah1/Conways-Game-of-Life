@@ -7,12 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    
     <div id="cont">
-        <button id="start" onclick="start()">Start</button>
-        <button id="stop" onclick="stop()">Stop</button>
-        <button id="random-cells" onclick="randomCells()">Random</button>
-        <button id="reset" onclick="reset()">Reset</button>
+        <canvas id="canvas"></canvas>
+        <div id="input">
+            <button id="start" onclick="start()">Start</button>
+            <button id="stop" onclick="stop()">Stop</button>
+            <button id="random-cells" onclick="randomCells()">Random</button>
+            <button id="reset" onclick="reset()">Reset</button>
+            <p>Size : <span id="size-span">5</span></p>
+            <input type="range" id="size" min="1" max="10" value="5">
+            <p>Speed : <span id="speed-span">5</span></p>
+            <input type="range" id="speed" min="1" max="10" value="5">
+        </div>
 
 
     </div>

@@ -1,78 +1,91 @@
-const canvas = document.getElementById("canvas")
+const canvas = document.getElementById("canvas");
 
-const ctx = canvas.getContext("2d")
+const ctx = canvas.getContext("2d");
 
-canvas.width = canvas.clientWidth
-canvas.height = canvas.clientHeight
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
 
-const W = canvas.width
-const H = canvas.height
-const N = 50
-const W_cell = W/N
-const H_cell = H/N
+let W = canvas.width;
+let H = canvas.height;
+let N = 50;
+let W_cell = W / N;
+let H_cell = H / N;
+let Speed = 200;
 
-console.log(H)
-console.log(W)
-console.log("hi")
+function changeSpeed() {
+    stop();
+    let speed = document.getElementById("speed").value;
+    document.getElementById("speed-span").innerText = speed;
+    Speed = Math.floor(1000 / speed);
+}
+document.addEventListener("input", changeSpeed);
 
-function drawGridLines(){
-    for(let i = 0; i < N; i++){
-        ctx.beginPath()
-        ctx.strokeStyle = "rgb(50, 50, 50)"
-        ctx.lineWidth = 1
-        ctx.moveTo(i*W_cell, 0)
-        ctx.lineTo(i*W_cell, H)
-        ctx.stroke()
+function changeSize() {
+    stop();
+    let size = document.getElementById("size").value;
+    document.getElementById("size-span").innerText = size;
+    N = 10 * size;
+    W_cell = W / N;
+    H_cell = H / N;
+    initialization();
+}
+document.addEventListener("input", changeSize);
+
+function drawGridLines() {
+    for (let i = 0; i < N; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = "rgb(50, 50, 50)";
+        ctx.lineWidth = 1;
+        ctx.moveTo(i * W_cell, 0);
+        ctx.lineTo(i * W_cell, H);
+        ctx.stroke();
     }
-    for(let i = 0; i < N; i++){
-        ctx.beginPath()
-        ctx.strokeStyle = "rgb(50, 50, 50)"
-        ctx.lineWidth = 1
-        ctx.moveTo(0, i*H_cell)
-        ctx.lineTo(W, i*H_cell)
-        ctx.stroke()
+    for (let i = 0; i < N; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = "rgb(50, 50, 50)";
+        ctx.lineWidth = 1;
+        ctx.moveTo(0, i * H_cell);
+        ctx.lineTo(W, i * H_cell);
+        ctx.stroke();
     }
 }
-drawGridLines()
 
-
-
-
-let cells_array = []
-class Cell{
-    constructor(i, j){
-        this.x = i*W_cell
-        this.y = j*H_cell
-        this.fill = false
+let cells_array = [];
+class Cell {
+    constructor(i, j) {
+        this.x = i * W_cell;
+        this.y = j * H_cell;
+        this.fill = false;
     }
 }
-function initialization(){
-    cells_array = []
-    for(let i = 0; i < N; i++){
-        let temp_array = []
-        for(let j = 0; j < N; j++){
-            temp_array.push(new Cell(i, j))
+
+function initialization() {
+    cells_array = [];
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < N; i++) {
+        let temp_array = [];
+        for (let j = 0; j < N; j++) {
+            temp_array.push(new Cell(i, j));
         }
-        cells_array.push(temp_array)
+        cells_array.push(temp_array);
     }
-    console.log(cells_array)
+    console.log(cells_array);
+    drawGridLines();
 }
-initialization()
+initialization();
 
-
-function randomCells(){
-    for(let i = 0; i < N; i++){
-        for(let j = 0; j < N; j++){
-            var rand = Math.floor(Math.random()*10)
-            if(rand <= 1){
-                cells_array[i][j].fill = true
-            }
-            else{
-                cells_array[i][j].fill = false
+function randomCells() {
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+            var rand = Math.floor(Math.random() * 10);
+            if (rand <= 1) {
+                cells_array[i][j].fill = true;
+            } else {
+                cells_array[i][j].fill = false;
             }
         }
     }
-    fillColor()
+    fillColor();
 }
 
 function inputGrid(event) {
@@ -87,16 +100,21 @@ function inputGrid(event) {
             const cellY = cell.y;
             const cellRight = cellX + W_cell;
             const cellBottom = cellY + H_cell;
-            if (mouseX >= cellX && mouseX < cellRight && mouseY >= cellY && mouseY < cellBottom) {
-                cell.fill = !cell.fill
+            if (
+                mouseX >= cellX &&
+                mouseX < cellRight &&
+                mouseY >= cellY &&
+                mouseY < cellBottom
+            ) {
+                cell.fill = !cell.fill;
                 fillColor();
-                return
+                return;
             }
         }
     }
 }
 
-canvas.addEventListener("mousedown", inputGrid)
+canvas.addEventListener("mousedown", inputGrid);
 
 // function setCells(event){
 //     cells_array[15][15].fill = true
@@ -109,112 +127,106 @@ canvas.addEventListener("mousedown", inputGrid)
 
 // }
 
-
-
-
-function fillColor(){
-    ctx.clearRect(0, 0, W, H)
-    for(let i = 0; i < N; i++){
-        for(let j = 0; j < N; j++){
-            if(cells_array[i][j].fill == true){
-                ctx.beginPath()
-                ctx.fillStyle = "white"
+function fillColor() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+            if (cells_array[i][j].fill == true) {
+                ctx.beginPath();
+                ctx.fillStyle = "white";
                 // console.log("true")
-                ctx.rect(cells_array[i][j].x, cells_array[i][j].y, cells_array[i][j].x+W_cell, cells_array[i][j].y+H_cell)
-                ctx.fill()
+                ctx.rect(
+                    cells_array[i][j].x,
+                    cells_array[i][j].y,
+                    cells_array[i][j].x + W_cell,
+                    cells_array[i][j].y + H_cell
+                );
+                ctx.fill();
                 ctx.closePath();
-            }
-            else{
-                ctx.beginPath()
-                ctx.fillStyle = "black"
+            } else {
+                ctx.beginPath();
+                ctx.fillStyle = "black";
                 // console.log("false")
-                ctx.rect(cells_array[i][j].x, cells_array[i][j].y, cells_array[i][j].x+W_cell, cells_array[i][j].y+H_cell)
-                ctx.fill()
+                ctx.rect(
+                    cells_array[i][j].x,
+                    cells_array[i][j].y,
+                    cells_array[i][j].x + W_cell,
+                    cells_array[i][j].y + H_cell
+                );
+                ctx.fill();
                 ctx.closePath();
             }
         }
     }
-    drawGridLines()
-
+    drawGridLines();
 }
 
-function changeCells(){
-    
-    let duplicate_cells_array = []
+function changeCells() {
+    let duplicate_cells_array = [];
     function duplicate() {
-        duplicate_cells_array = cells_array.map(row => row.map(cell => ({...cell})));
+        duplicate_cells_array = cells_array.map((row) =>
+            row.map((cell) => ({ ...cell }))
+        );
     }
-    duplicate()
+    duplicate();
 
-    console.log("changing cells")
-    for(let i = 1; i < N-1; i++){
-        for(let j = 1; j < N-1; j++){
-            var ctr = 0
-            
-            for(let ii = i-1; ii <= i+1; ii++){
-                for(let jj = j-1; jj <= j+1; jj++){
-                    if(cells_array[ii][jj].fill == true){
-                        ctr++
+    console.log("changing cells");
+    for (let i = 1; i < N - 1; i++) {
+        for (let j = 1; j < N - 1; j++) {
+            var ctr = 0;
+
+            for (let ii = i - 1; ii <= i + 1; ii++) {
+                for (let jj = j - 1; jj <= j + 1; jj++) {
+                    if (cells_array[ii][jj].fill == true) {
+                        ctr++;
                     }
                 }
             }
 
-            if(cells_array[i][j].fill == true){
-                ctr--
+            if (cells_array[i][j].fill == true) {
+                ctr--;
             }
 
-
-
-
-
-
-
-            if(cells_array[i][j].fill == true){
-                if(ctr==2||ctr==3){
+            if (cells_array[i][j].fill == true) {
+                if (ctr == 2 || ctr == 3) {
                     // duplicate_cells_array[i][j].fill = true
-                }
-                else{
-                    duplicate_cells_array[i][j].fill = false
+                } else {
+                    duplicate_cells_array[i][j].fill = false;
                 }
             }
 
-            if(cells_array[i][j].fill == false){
-                if(ctr == 3){
-                    duplicate_cells_array[i][j].fill = true
+            if (cells_array[i][j].fill == false) {
+                if (ctr == 3) {
+                    duplicate_cells_array[i][j].fill = true;
                 }
                 // else{
                 //     duplicate_cells_array[i][j].fill = false
                 // }
             }
-
         }
     }
 
     function duplicate2() {
-        cells_array = duplicate_cells_array.map(row => row.map(cell => ({...cell})));
+        cells_array = duplicate_cells_array.map((row) =>
+            row.map((cell) => ({ ...cell }))
+        );
     }
-    duplicate2()
+    duplicate2();
 
     fillColor();
 }
 
-
-let intervalId
-function start(){
-    // setCells()
-    intervalId = setInterval(changeCells, 200)
+let intervalId;
+function start() {
+    clearInterval(intervalId);
+    intervalId = setInterval(changeCells, Speed);
 }
 
-function stop(){
-    clearInterval(intervalId)
+function stop() {
+    clearInterval(intervalId);
 }
 
-function reset(){
-    initialization()
-    fillColor()
+function reset() {
+    initialization();
+    fillColor();
 }
-
-
-
-
-
