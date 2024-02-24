@@ -7,7 +7,7 @@ canvas.height = canvas.clientHeight
 
 const W = canvas.width
 const H = canvas.height
-const N = 100
+const N = 50
 const W_cell = W/N
 const H_cell = H/N
 
@@ -49,6 +49,35 @@ function setCells(){
     fillColor()
 }
 
+function inputGrid(event) {
+    // Calculate canvas-relative mouse coordinates
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    // Determine which cell was clicked
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+            const cell = cells_array[i][j];
+            // Calculate cell boundaries
+            const cellX = cell.x;
+            const cellY = cell.y;
+            const cellRight = cellX + W_cell;
+            const cellBottom = cellY + H_cell;
+            // Check if mouse coordinates are within cell boundaries
+            if (mouseX >= cellX && mouseX < cellRight && mouseY >= cellY && mouseY < cellBottom) {
+                // Toggle the fill property of the clicked cell
+                cell.fill = !cell.fill;
+                // Redraw the canvas
+                fillColor();
+                return; // Exit the loop early since we found the clicked cell
+            }
+        }
+    }
+}
+
+canvas.addEventListener("click", inputGrid)
+
 // function setCells(event){
 //     cells_array[15][15].fill = true
 //     cells_array[16][14].fill = true
@@ -59,6 +88,8 @@ function setCells(){
 //     fillColor()
 
 // }
+
+
 
 
 function fillColor(){
@@ -118,7 +149,7 @@ function changeCells(){
 
             if(cells_array[i][j].fill == true){
                 if(ctr==2||ctr==3){
-                    duplicate_cells_array[i][j].fill = true
+                    // duplicate_cells_array[i][j].fill = true
                 }
                 else{
                     duplicate_cells_array[i][j].fill = false
@@ -129,9 +160,9 @@ function changeCells(){
                 if(ctr == 3){
                     duplicate_cells_array[i][j].fill = true
                 }
-                else{
-                    duplicate_cells_array[i][j].fill = false
-                }
+                // else{
+                //     duplicate_cells_array[i][j].fill = false
+                // }
             }
 
         }
@@ -145,7 +176,15 @@ function changeCells(){
     fillColor();
 }
 
-document.addEventListener("DOMContentLoaded", setCells)
+// document.addEventListener("DOMContentLoaded", setCells)
+// document.addEventListener("click", setCells)
 
-setInterval(changeCells, 200)
+function start(){
+    // setCells()
+    setInterval(changeCells, 1000)
+}
+
+
+
+
 
