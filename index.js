@@ -131,11 +131,16 @@ function parseCSV(csv){
         name.className = "pattern-name"
         name.innerText = data[i].name
 
+        const image = document.createElement("img")
+        image.className = "pattern-image"
+        image.src = `./images/img-${i}.png`
+
         const button = document.createElement("button")
         button.addEventListener("click", () => createPattern(i))
         // button.innerText = `${i}`
 
         button.appendChild(name)
+        button.appendChild(image)
         card.appendChild(button)
         cont.appendChild(card)
     }
