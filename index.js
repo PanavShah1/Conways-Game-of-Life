@@ -103,11 +103,12 @@ function parseCSV(csv){
     const rows = csv.split('\n')
     const data = []
     console.log(rows)
+    let obj = {}
     for(let i = 0; i < rows.length; i++){
         const row = rows[i].split(',')
         console.log('row')
         console.log(row)
-        const obj = {}
+        obj = {}
         // for(let j = 0; j < row.length; j++){
         //     obj[j] = row[j];
         // }
@@ -122,10 +123,21 @@ function parseCSV(csv){
     }
     for(let i = 0; i < rows.length; i++){
         const cont = document.getElementById("patterns")
+
+        const card = document.createElement("div")
+        card.className = "pattern-card"
+
+        const name = document.createElement("p")
+        name.className = "pattern-name"
+        name.innerText = data[i].name
+
         const button = document.createElement("button")
         button.addEventListener("click", () => createPattern(i))
-        button.innerText = `${i}`
-        cont.appendChild(button)
+        // button.innerText = `${i}`
+
+        button.appendChild(name)
+        card.appendChild(button)
+        cont.appendChild(card)
     }
     return data
 }
