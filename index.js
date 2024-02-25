@@ -95,7 +95,112 @@ function randomCells(){
     fillColor()
 }
 
+
+
+let csvData
+
+function parseCSV(csv){
+    const rows = csv.split('\n')
+    const data = []
+    console.log(rows)
+    for(let i = 0; i < rows.length; i++){
+        const row = rows[i].split(',')
+        console.log('row')
+        console.log(row)
+        const obj = {}
+        // for(let j = 0; j < row.length; j++){
+        //     obj[j] = row[j];
+        // }
+        obj['name'] = row[0]
+        obj['size'] = [row[1], row[2]]
+        var coordinates = []
+        for(let j = 3; j < row.length; j++){
+            coordinates.push(row[j])
+        }
+        obj['coordinates'] = coordinates
+        data.push(obj)
+    }
+    for(let i = 0; i < rows.length; i++){
+        const cont = document.getElementById("patterns")
+        const button = document.createElement("button")
+        button.addEventListener("click", () => createPattern(i))
+        button.innerText = `${i}`
+        cont.appendChild(button)
+    }
+    return data
+}
+
+function fetchData(url){
+    return fetch(url)
+        .then(response => response.text())
+        .then(data => parseCSV(data))
+}
+
+const csvFileUrl = "patterns.csv"
+fetchData(csvFileUrl)
+    .then(data => {
+        console.log("csv")
+        console.log(data)
+        csvData = data
+    })
+    .catch(error => {
+        console.error('Error fetching data: ', error)
+    })
+
+
+
+
+function createPattern(i){
+    console.log(csvData[i])
+    const data = csvData[i]
+    const center = Math.floor(N/2)
+    const name = data.name
+    const x_start = center - Math.floor(parseInt(data.size[0])/2)
+    const y_start = center - Math.floor(parseInt(data.size[1])/2)
+    console.log(x_start + " " + y_start)
+
+    for(let i = 0; i < data.coordinates.length; i=i+2){
+        console.log(x_start+parseInt(data.coordinates[i]))
+        console.log(y_start+parseInt(data.coordinates[i+1]))
+        cells_array[x_start+parseInt(data.coordinates[i])][y_start+parseInt(data.coordinates[i+1])].fill = true
+        console.log(cells_array[x_start+parseInt(data.coordinates[i]), y_start+parseInt(data.coordinates[i+1])].fill)
+    }
+    console.log(cells_array)
+    fillColor()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function setCells(event){
+//     cells_array[15][15].fill = true
+//     cells_array[16][14].fill = true
+//     cells_array[17][14].fill = true
+//     cells_array[17][15].fill = true
+//     cells_array[17][16].fill = true
+
+//     fillColor()
+
+// }
+
+
 function inputGrid(event) {
+    console.log("mouse")
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
@@ -118,16 +223,6 @@ function inputGrid(event) {
 
 canvas.addEventListener("mousedown", inputGrid)
 
-// function setCells(event){
-//     cells_array[15][15].fill = true
-//     cells_array[16][14].fill = true
-//     cells_array[17][14].fill = true
-//     cells_array[17][15].fill = true
-//     cells_array[17][16].fill = true
-
-//     fillColor()
-
-// }
 
 
 

@@ -1,7 +1,3 @@
-    cells_array[15][15].fill = true
-    cells_array[16][15].fill = true
-    cells_array[17][15].fill = true
-    cells_array[15][16].fill = true
 
 veritasium
     cells_array[15][15].fill = true
