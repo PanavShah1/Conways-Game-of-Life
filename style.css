@@ -26,6 +26,14 @@ body{
     max-width: 300px;
 }
 
+#title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 #info{
     border: 1px solid black;
     padding: 10px;
@@ -35,6 +43,8 @@ body{
 #canvas{
     background-color: rgb(0, 0, 0);
     height: 100vh;
+    width: 100%;
+    /* height: 80%; */
     max-width: 1000px;
     max-height: 1000px;
     margin-right: 20px;
@@ -71,7 +81,7 @@ body{
 
 .pattern-card {
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     /* background-color: aqua; */
 }
 
@@ -81,4 +91,31 @@ body{
 
 .pattern-name{
     font-size: 0.5rem;
+    height: 20px;
+}
+
+
+@media (max-width: 1250px){
+    #cont{
+        width: 100%;
+        /* background-color: aqua; */
+        flex-direction: column-reverse;
+    }
+    #inner-cont{
+        margin-top: 500px;
+        /* background-color: yellow; */
+        width: 100%;
+        max-width: 1000px;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    #canvas{
+        width: 100%;
+        /* height: 100%; */
+    }
+    #patterns{
+        /* background-color: aqua; */
+        display: flex;
+    }
 }

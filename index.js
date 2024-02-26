@@ -18,6 +18,7 @@ function changeSpeed(){
     let speed = document.getElementById("speed").value
     document.getElementById("speed-span").innerText = speed 
     Speed = Math.floor(1000/speed)
+    start()
 }
 document.addEventListener("input", changeSpeed)
 
